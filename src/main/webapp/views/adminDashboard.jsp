@@ -333,7 +333,6 @@
   }
 
   function viewOrderDetails(orderNumber) {
-    // Fetch order details via AJAX
     fetch('${pageContext.request.contextPath}/AdminServlet?action=getOrderDetails&orderNumber=' + orderNumber)
             .then(response => response.text())
             .then(html => {
