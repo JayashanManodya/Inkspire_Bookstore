@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
     private String orderNumber;
     private String username;
@@ -174,4 +174,3 @@ public class Order {
         this.reviewed = reviewed;
     }
 }
-
