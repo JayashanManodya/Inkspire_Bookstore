@@ -15,8 +15,8 @@ import service.OrderService;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet("/OrderServlet")
 public class OrderServlet extends HttpServlet {
