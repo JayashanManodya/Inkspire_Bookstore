@@ -19,9 +19,9 @@ import java.util.List;
 
 @WebServlet("/AdminServlet")
 @MultipartConfig(
-    fileSizeThreshold = 1024 * 1024,
-    maxFileSize = 1024 * 1024 * 5,
-    maxRequestSize = 1024 * 1024
+        fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024
 )
 public class AdminServlet extends HttpServlet {
     private BookService bookService;
@@ -42,14 +42,14 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null || 
-            !((User)session.getAttribute("user")).isAdmin()) {
+        if (session == null || session.getAttribute("user") == null ||
+                !((User)session.getAttribute("user")).isAdmin()) {
             response.sendRedirect(request.getContextPath() + "/views/login.jsp");
             return;
         }
 
         String action = request.getParameter("action");
-        
+
         if ("getOrderDetails".equals(action)) {
             String orderNumber = request.getParameter("orderNumber");
             Order order = orderService.getOrderByNumber(orderNumber);
@@ -62,7 +62,7 @@ public class AdminServlet extends HttpServlet {
 
         List<Book> books = bookService.getAllBooks();
         List<Order> orders = orderService.getAllOrders();
-        
+
         request.setAttribute("books", books);
         request.setAttribute("orders", orders);
         request.getRequestDispatcher("/views/adminDashboard.jsp").forward(request, response);
@@ -71,14 +71,14 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("user") == null || 
-            !((User)session.getAttribute("user")).isAdmin()) {
+        if (session == null || session.getAttribute("user") == null ||
+                !((User)session.getAttribute("user")).isAdmin()) {
             response.sendRedirect(request.getContextPath() + "/views/login.jsp");
             return;
         }
 
         String action = request.getParameter("action");
-        
+
         switch (action) {
             case "addBook":
                 addBook(request, response);
@@ -109,28 +109,28 @@ public class AdminServlet extends HttpServlet {
             String description = request.getParameter("description");
             String category = request.getParameter("category");
             double rating = Double.parseDouble(request.getParameter("rating"));
-            
+
             Part photoPart = request.getPart("photo");
             String fileName = photoPart.getSubmittedFileName();
             String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
-            
+
 
             String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
             photoPart.write(uploadPath + File.separator + uniqueFileName);
-            
+
 
             Book book = new Book(
-                bookService.getNextId(),
-                title,
-                author,
-                price,
-                isbn,
-                description,
-                category,
-                uniqueFileName,
-                rating
+                    bookService.getNextId(),
+                    title,
+                    author,
+                    price,
+                    isbn,
+                    description,
+                    category,
+                    uniqueFileName,
+                    rating
             );
-            
+
             bookService.addBook(book);
             response.sendRedirect(request.getContextPath() + "/AdminServlet");
         } catch (Exception e) {
@@ -147,7 +147,7 @@ public class AdminServlet extends HttpServlet {
             double price = Double.parseDouble(request.getParameter("price"));
             double rating = Double.parseDouble(request.getParameter("rating"));
             String description = request.getParameter("description");
-            
+
             Book existingBook = bookService.getBookById(id);
             if (existingBook != null) {
                 Book updatedBook = new Book(id, title, author, price, rating, existingBook.getPhoto());
