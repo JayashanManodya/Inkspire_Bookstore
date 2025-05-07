@@ -44,7 +44,7 @@ public class UserServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 session.setAttribute("isAdmin", user.isAdmin());
-                
+
                 if (user.isAdmin()) {
                     response.sendRedirect(request.getContextPath() + "/AdminServlet");
                 } else {
@@ -71,6 +71,34 @@ public class UserServlet extends HttpServlet {
                 session.invalidate();
             }
             response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+        } else if ("changePassword".equals(action)) {
+            HttpSession session = request.getSession(false);
+            if (session == null || session.getAttribute("user") == null) {
+                response.sendRedirect(request.getContextPath() + "/views/login.jsp?error=sessionExpired");
+                return;
+            }
+
+            User user = (User) session.getAttribute("user");
+            String currentPassword = request.getParameter("currentPassword");
+            String newPassword = request.getParameter("newPassword");
+            String confirmNewPassword = request.getParameter("confirmNewPassword");
+
+            if (newPassword == null || !newPassword.equals(confirmNewPassword)) {
+                session.setAttribute("passwordChangeError", "New passwords do not match.");
+                response.sendRedirect(request.getContextPath() + "/views/myaccount.jsp");
+                return;
+            }
+
+            // Assuming userService.changePassword(userId, currentPassword, newPassword) exists
+            // and returns a boolean indicating success.
+            boolean passwordChanged = userService.changePassword(user.getId(), currentPassword, newPassword);
+
+            if (passwordChanged) {
+                session.setAttribute("passwordChangeSuccess", "Password changed successfully.");
+            } else {
+                session.setAttribute("passwordChangeError", "Failed to change password. Please check your current password.");
+            }
+            response.sendRedirect(request.getContextPath() + "/views/myaccount.jsp");
         }
     }
 }
