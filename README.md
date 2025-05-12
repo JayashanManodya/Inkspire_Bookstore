@@ -1,143 +1,103 @@
-# Online Bookstore Management System
+# InkSpire BookStore
 
-A web-based bookstore management system built with Java Servlet and JSP technologies. This application allows users to manage books, handle inventory, and process online orders.
+A modern online bookstore management system built with Java EE technologies, providing a seamless experience for both customers and administrators.
 
-## Features
+## 🚀 Features
 
-- Book management (Add, Update, Delete, View)
-- Inventory tracking
-- User authentication and authorization
-- Responsive web interface
-- RESTful API endpoints
+- User-friendly interface for browsing and purchasing books
+- Secure user authentication and authorization
+- Book inventory management
+- Shopping cart functionality
+- Order processing and tracking
+- Admin dashboard for store management
+- Responsive design for all devices
+- File-based data storage system
 
-## Technology Stack
+## 🛠️ Technologies Used
 
 - Java 17
-- Jakarta Servlet 6.0
-- Jakarta Server Pages (JSP)
-- JSTL 3.0
+- Jakarta EE (Servlet, JSP, JSTL)
 - Maven for dependency management
+- Tomcat 7 for deployment
 - Gson for JSON processing
+- HTML/CSS/JavaScript for frontend
+- Text file-based data storage
 
-## Prerequisites
+## 📋 Prerequisites
 
-- Java Development Kit (JDK) 17 or higher
+- JDK 17 or higher
 - Maven 3.6 or higher
-- A Java EE compatible web server (e.g., Apache Tomcat, GlassFish)
+- Tomcat 7 or compatible servlet container
 
-## Installation
+## 🚀 Getting Started
 
 1. Clone the repository:
-```bash
-git clone [your-repository-url]
-```
+   ```bash
+   git clone https://github.com/yourusername/InkSpire_BookStore.git
+   ```
 
 2. Navigate to the project directory:
-```bash
-cd Online-Bookstore-Management-Sys
-```
+   ```bash
+   cd InkSpire_BookStore
+   ```
 
 3. Build the project using Maven:
-```bash
-mvn clean install
+   ```bash
+   mvn clean install
+   ```
+
+4. Run the application:
+   ```bash
+   mvn tomcat7:run
+   ```
+
+5. Access the application at `http://localhost:8080`
+
+## 📁 Project Structure
+
 ```
-
-4. Deploy the generated WAR file to your web server
-
-## Project Structure
-
-```
-Online-Bookstore-Management-Sys/
+InkSpire_BookStore/
 ├── src/
 │   ├── main/
-│   │   ├── java/                    # Java source files
-│   │   │   ├── controller/          # Servlet controllers
-│   │   │   │   ├── AdminServlet.java
-│   │   │   │   ├── BookServlet.java
-│   │   │   │   ├── CartServlet.java
-│   │   │   │   ├── OrderServlet.java
-│   │   │   │   ├── ReviewServlet.java
-│   │   │   │   └── UserServlet.java
-│   │   │   ├── model/              # Data models
-│   │   │   │   ├── Book.java
-│   │   │   │   ├── Cart.java
-│   │   │   │   ├── EBook.java
-│   │   │   │   ├── FictionBook.java
-│   │   │   │   ├── NonFictionBook.java
-│   │   │   │   ├── Order.java
-│   │   │   │   ├── PrintedBook.java
-│   │   │   │   ├── Review.java
-│   │   │   │   └── User.java
-│   │   │   ├── service/            # Business logic
-│   │   │   │   ├── BookService.java
-│   │   │   │   ├── CartService.java
-│   │   │   │   ├── OrderService.java
-│   │   │   │   ├── ReviewService.java
-│   │   │   │   └── UserService.java
-│   │   │   └── data/               # Data storage
-│   │   │       ├── book.txt
-│   │   │       ├── cart.txt
-│   │   │       ├── orders.txt
-│   │   │       ├── reviews.txt
-│   │   │       └── users.txt
-│   │   ├── resources/    # Configuration files
-│   │   └── webapp/       # Web resources (JSP, CSS, JS)
-├── pom.xml               # Maven configuration
-└── README.md            # Project documentation
+│   │   ├── java/        # Java source files
+│   │   ├── resources/   # Configuration files
+│   │   └── webapp/      # Web resources
+├── utils/               # Utility classes
+├── data/               # Text file database storage
+├── pom.xml             # Maven configuration
+└── README.md           # Project documentation
 ```
 
-## Component Details
+## 🔧 Configuration
 
-### Controllers (`controller/`)
-- `AdminServlet.java`: Handles administrative operations
-- `BookServlet.java`: Manages book-related HTTP requests
-- `CartServlet.java`: Processes shopping cart operations
-- `OrderServlet.java`: Handles order processing
-- `ReviewServlet.java`: Manages book reviews
-- `UserServlet.java`: Handles user account operations
+1. Data files are stored in the `data` directory
+2. Server configuration is in `src/main/resources/server.xml`
 
-### Models (`model/`)
-- `Book.java`: Base class for all book types
-- `FictionBook.java` & `NonFictionBook.java`: Book genre classifications
-- `EBook.java` & `PrintedBook.java`: Book format types
-- `Cart.java`: Shopping cart implementation
-- `Order.java`: Order data structure
-- `Review.java`: Book review system
-- `User.java`: User account model
+## 🤝 Contributing
 
-### Services (`service/`)
-- `BookService.java`: Book management business logic
-- `CartService.java`: Shopping cart operations
-- `OrderService.java`: Order processing logic
-- `ReviewService.java`: Review management
-- `UserService.java`: User account management
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### Data Storage (`data/`)
-Text-based data storage files:
-- `book.txt`: Book inventory
-- `cart.txt`: Shopping cart data
-- `orders.txt`: Order history
-- `reviews.txt`: Book reviews
-- `users.txt`: User accounts
-
-## Configuration
-
-The application uses standard Java EE configuration. Make sure to configure your web server appropriately and set up any necessary database connections.
-
-## Contributing
-
-1. Fork the repository
+1. Fork the project
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
+## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
+## 👥 Authors
 
-- Jakarta EE Community
-- Maven Community
-- All contributors who have helped with the project
+- <a href ="https://github.com/JayashanManodya">Jayashan Manodya<a>
+- <a href ="https://github.com/Komal-Disanayaka">Komal Dissanayaka<a>
+- <a href ="https://github.com/AshenAloka">Ashen Aloka<a>
+- <a href ="https://github.com/praveenchamika">Praveen Chamika<a>
+- <a href ="https://github.com/Dinura2004">Dinura Janidu<a>
+- <a href ="https://github.com/AhamedAAHA">Ahamed AAHA<a>
+
+
+## 🙏 Acknowledgments
+
+- Thanks to all contributors who have helped shape this project
+- Special thanks to the open-source community for their invaluable tools and libraries 
