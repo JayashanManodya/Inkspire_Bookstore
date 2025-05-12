@@ -2,6 +2,16 @@
 
 A modern online bookstore management system built with Java EE technologies, providing a seamless experience for both customers and administrators.
 
+## 🎓 Academic Context
+
+- **Module**: Object-Oriented Programming (OOP Java SE1020)
+- **University**: Sri Lanka Institute of Information Technology (SLIIT)
+- **Department**: Faculty of Computing
+- **Year**: 1st Year
+- **Semester**: 2nd Semester
+- **Academic Year**: 2025
+- **Project Type**: Web Application Development Project
+
 ## 🚀 Features
 
 - User-friendly interface for browsing and purchasing books
@@ -72,16 +82,6 @@ InkSpire_BookStore/
 
 1. Data files are stored in the `data` directory
 2. Server configuration is in `src/main/resources/server.xml`
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📝 License
 
