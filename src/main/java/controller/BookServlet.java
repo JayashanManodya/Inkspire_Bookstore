@@ -16,9 +16,9 @@ import java.util.List;
 
 @WebServlet("/books/*")
 @MultipartConfig(
-    fileSizeThreshold = 1024 * 1024, // 1 MB
-    maxFileSize = 1024 * 1024 * 5,   // 5 MB
-    maxRequestSize = 1024 * 1024 * 10 // 10 MB
+        fileSizeThreshold = 1024 * 1024, // 1 MB
+        maxFileSize = 1024 * 1024 * 5,   // 5 MB
+        maxRequestSize = 1024 * 1024 * 10 // 10 MB
 )
 public class BookServlet extends HttpServlet {
     private BookService bookService;
@@ -50,6 +50,18 @@ public class BookServlet extends HttpServlet {
                 request.setAttribute("books", books);
                 request.setAttribute("searchQuery", query);
                 request.setAttribute("searchType", searchType);
+            } else if ("sort".equals(action)) {
+                String sortBy = request.getParameter("sortBy");
+                List<Book> books = bookService.getAllBooks();
+
+                if ("price".equals(sortBy)) {
+                    books = bookService.sortBooksByPrice(true); // true for ascending
+                } else if ("rating".equals(sortBy)) {
+                    books = bookService.sortBooksByRating(true); // true for ascending
+                }
+
+                request.setAttribute("books", books);
+                request.setAttribute("sortBy", sortBy);
             } else {
                 // Default action: show all books
                 List<Book> books = bookService.getAllBooks();
