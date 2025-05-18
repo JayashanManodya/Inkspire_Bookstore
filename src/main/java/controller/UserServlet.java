@@ -89,8 +89,6 @@ public class UserServlet extends HttpServlet {
                 return;
             }
 
-            // Assuming userService.changePassword(userId, currentPassword, newPassword) exists
-            // and returns a boolean indicating success.
             boolean passwordChanged = userService.changePassword(user.getId(), currentPassword, newPassword);
 
             if (passwordChanged) {
