@@ -93,7 +93,29 @@ public class OrderService {
         }
         return null;
     }
+    //Dinu
+    public void updateOrderStatus(String orderNumber, String status) {
+        Order order = getOrderByNumber(orderNumber);
+        if (order != null) {
+            order.setOrderStatus(status);
+            saveOrders();
+        }
+    }
 
+    public void updateOrder(Order updatedOrder) {
+        for (int i = 0; i < orders.size(); i++) {
+            if (orders.get(i).getOrderNumber().equals(updatedOrder.getOrderNumber())) {
+                orders.set(i, updatedOrder);
+                saveOrders();
+                break;
+            }
+        }
+    }
+
+    public void deleteOrder(String orderNumber) {
+        orders.removeIf(order -> order.getOrderNumber().equals(orderNumber));
+        saveOrders();
+    }
 
     private String generateOrderNumber() {
         return UUID.randomUUID().toString().substring(0, 8).toUpperCase();
@@ -204,3 +226,23 @@ public class OrderService {
             LOGGER.log(Level.SEVERE, "Error loading orders", e);
         }
     }
+    //Dinu
+    private void saveOrders() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(ordersFilePath))) {
+            for (Order order : orders) {
+                writer.println("ORDER:" + order.getOrderNumber() + "|" +
+                        order.getUsername() + "|" +
+                        order.getOrderStatus() + "|" +
+                        DATE_FORMAT.format(order.getDate()) + "|" +
+                        order.getTotal());
+
+                for (OrderBook item : order.getBooks()) {
+                    writer.println("ITEM:" + item.getBookId() + "|" + item.getQuantity());
+                }
+            }
+            LOGGER.info("Successfully saved " + orders.size() + " orders");
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Error saving orders", e);
+        }
+    }
+}
