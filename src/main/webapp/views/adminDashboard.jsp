@@ -358,11 +358,9 @@
                 if (browseBooksBtn) {
                     browseBooksBtn.remove();
                 }
-
-                // Update the modal content with the cleaned HTML
+                
                 document.getElementById('orderDetailsContent').innerHTML = tempContainer.innerHTML;
 
-                // Show the modal
                 var orderModal = new bootstrap.Modal(document.getElementById('orderDetailsModal'));
                 orderModal.show();
             })
