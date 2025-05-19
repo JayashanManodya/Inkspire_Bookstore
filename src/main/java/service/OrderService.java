@@ -1,5 +1,5 @@
 package service;
-
+//aaha
 import jakarta.servlet.ServletContext;
 import model.Book;
 import model.Order;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+//aaha
 public class OrderService {
     private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
     private static final String ORDERS_FILE = "data" + File.separator + "orders.txt";
@@ -20,7 +20,7 @@ public class OrderService {
     private final BookService bookService;
     private List<Order> orders;
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+//aaha
     public OrderService(ServletContext context) {
         String realPath = context.getRealPath("/");
         this.ordersFilePath = realPath + ORDERS_FILE;
@@ -39,7 +39,7 @@ public class OrderService {
         LOGGER.info("Orders file path: " + ordersFilePath);
         loadOrders(); // Load orders when service is initialized
     }
-
+    //aaha
     public Order createOrder(String username, List<OrderBook> items) {
         Order order = new Order();
         order.setOrderNumber(generateOrderNumber());
@@ -70,7 +70,7 @@ public class OrderService {
         saveOrders();
         return order;
     }
-
+    //aaha
     public List<Order> getUserOrders(String username) {
         List<Order> userOrders = new LinkedList<>();
         for (Order order : orders) {
@@ -98,7 +98,7 @@ public class OrderService {
     private String generateOrderNumber() {
         return UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
-
+    //aaha
     private void loadOrders() {
         File file = new File(ordersFilePath);
         if (!file.exists()) {
