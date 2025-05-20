@@ -1,4 +1,5 @@
 package service;
+
 //aaha
 import jakarta.servlet.ServletContext;
 import model.Book;
@@ -12,22 +13,26 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 //aaha
-public class OrderService {
+public class OrderService { // Logger setup panrom to log errors
     private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
     private static final String ORDERS_FILE = "data" + File.separator + "orders.txt";
     private final String ordersFilePath;
     private final BookService bookService;
     private List<Order> orders;
+    // Date format set panrom
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//aaha
+    
+    //aaha
+    // Constructor - context-la irundhu path setup panrom
     public OrderService(ServletContext context) {
         String realPath = context.getRealPath("/");
         this.ordersFilePath = realPath + ORDERS_FILE;
         this.bookService = new BookService(context);
-        this.orders = new LinkedList<>();
+        this.orders = new LinkedList<>(); //initialize
         
-        // Ensure the directory exists
+        // Directory illa-na create panrom
         File ordersFile = new File(ordersFilePath);
         if (!ordersFile.getParentFile().exists()) {
             boolean created = ordersFile.getParentFile().mkdirs();
@@ -39,9 +44,11 @@ public class OrderService {
         LOGGER.info("Orders file path: " + ordersFilePath);
         loadOrders(); // Load orders when service is initialized
     }
+    
     //aaha
+    // Pudhu order create panra method
     public Order createOrder(String username, List<OrderBook> items) {
-        Order order = new Order();
+        Order order = new Order(); // object
         order.setOrderNumber(generateOrderNumber());
         order.setUsername(username);
         
@@ -61,7 +68,7 @@ public class OrderService {
             }
         }
         
-        order.setBooks(orderItemsWithBooks);
+        order.setBooks(orderItemsWithBooks); // Order items set panrom
         order.setOrderStatus("Pending");
         order.setDate(new java.util.Date());
         order.setTotal(total);
@@ -70,7 +77,9 @@ public class OrderService {
         saveOrders();
         return order;
     }
+    
     //aaha
+    // Oru user-oda orders fetch panna
     public List<Order> getUserOrders(String username) {
         List<Order> userOrders = new LinkedList<>();
         for (Order order : orders) {
@@ -93,6 +102,7 @@ public class OrderService {
         }
         return null;
     }
+    
     //Dinu
     public void updateOrderStatus(String orderNumber, String status) {
         Order order = getOrderByNumber(orderNumber);
@@ -120,7 +130,9 @@ public class OrderService {
     private String generateOrderNumber() {
         return UUID.randomUUID().toString().substring(0, 8).toUpperCase();
     }
+    
     //aaha
+    // Orders file-la irundhu load panna
     private void loadOrders() {
         File file = new File(ordersFilePath);
         if (!file.exists()) {
@@ -226,6 +238,7 @@ public class OrderService {
             LOGGER.log(Level.SEVERE, "Error loading orders", e);
         }
     }
+    
     //Dinu
     private void saveOrders() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(ordersFilePath))) {
