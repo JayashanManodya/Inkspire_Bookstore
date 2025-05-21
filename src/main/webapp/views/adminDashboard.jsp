@@ -241,6 +241,65 @@
             </div>
         </div>
     </div>
+
+    <!-- User Management Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card admin-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-users text-info"></i> User Management</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <c:if test="${not empty users}">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${users}" var="user">
+                                        <tr>
+                                            <td>${user.id}</td>
+                                            <td>${user.username}</td>
+                                            <td>${user.email}</td>
+                                            <td>
+                                                <span class="badge ${user.admin ? 'bg-danger' : 'bg-primary'}">
+                                                    ${user.admin ? 'Admin' : 'User'}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <c:if test="${!user.admin}">
+                                                    <form action="${pageContext.request.contextPath}/AdminServlet" method="get" style="display: inline;">
+                                                        <input type="hidden" name="action" value="deleteUser">
+                                                        <input type="hidden" name="userId" value="${user.id}">
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">
+                                                            <i class="fas fa-trash"></i> Delete
+                                                        </button>
+                                                    </form>
+                                                </c:if>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:if>
+                        <c:if test="${empty users}">
+                            <div class="text-center py-4">
+                                <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">No users available</p>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Edit Book Modal -->
