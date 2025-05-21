@@ -81,6 +81,9 @@ public class OrderService { // Logger setup panrom to log errors
     //aaha
     // Oru user-oda orders fetch panna
     public List<Order> getUserOrders(String username) {
+        // Reload orders from file to ensure fresh data
+        loadOrders();
+        
         List<Order> userOrders = new LinkedList<>();
         for (Order order : orders) {
             if (order.getUsername().equals(username)) {
@@ -91,6 +94,8 @@ public class OrderService { // Logger setup panrom to log errors
     }
 
     public List<Order> getAllOrders() {
+        // Reload orders from file to ensure fresh data
+        loadOrders();
         return new LinkedList<>(orders);
     }
 

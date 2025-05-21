@@ -27,6 +27,13 @@ public class BookService {
     }
     
     public List<Book> getAllBooks() {
+<<<<<<< Updated upstream
+=======
+        // Reload books from file to ensure fresh data
+        books = new BookLinkedList();
+        loadBooks();
+        
+>>>>>>> Stashed changes
         Book[] bookArray = books.getAllBooks();
         List<Book> bookList = new ArrayList<>();
         for (Book book : bookArray) {
