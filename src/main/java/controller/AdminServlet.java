@@ -13,6 +13,11 @@ import model.Order;
 import model.User;
 import service.BookService;
 import service.OrderService;
+<<<<<<< Updated upstream
+=======
+import service.UserService;
+
+>>>>>>> Stashed changes
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -26,12 +31,14 @@ import java.util.List;
 public class AdminServlet extends HttpServlet {
     private BookService bookService;
     private OrderService orderService;
+    private UserService userService;
     private static final String UPLOAD_DIRECTORY = "bookphotos";
 
     @Override
     public void init() throws ServletException {
         bookService = new BookService(getServletContext());
         orderService = new OrderService(getServletContext());
+        userService = new UserService(getServletContext());
         String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
@@ -60,11 +67,29 @@ public class AdminServlet extends HttpServlet {
             }
         }
 
+        if ("deleteUser".equals(action)) {
+            try {
+                int userId = Integer.parseInt(request.getParameter("userId"));
+                boolean deleted = userService.deleteUser(userId);
+                if (deleted) {
+                    request.getSession().setAttribute("message", "User deleted successfully");
+                } else {
+                    request.getSession().setAttribute("error", "Failed to delete user. Cannot delete admin user.");
+                }
+            } catch (NumberFormatException e) {
+                request.getSession().setAttribute("error", "Invalid user ID");
+            }
+            response.sendRedirect(request.getContextPath() + "/AdminServlet");
+            return;
+        }
+
         List<Book> books = bookService.getAllBooks();
         List<Order> orders = orderService.getAllOrders();
+        List<User> users = userService.getAllUsers();
 
         request.setAttribute("books", books);
         request.setAttribute("orders", orders);
+        request.setAttribute("users", users);
         request.getRequestDispatcher("/views/adminDashboard.jsp").forward(request, response);
     }
 
