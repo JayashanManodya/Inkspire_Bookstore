@@ -137,4 +137,20 @@ public class Book implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
+    //Overrides the default toString() method. This is useful for debugging — it gives a readable string representation of the Book object with all field values.
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                ", rating=" + rating +
+                ", photo='" + photo + '\'' +
+                ", stockQuantity=" + stockQuantity +
+                ", description='" + description + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", category='" + category + '\'' +
+                '}';
+    }
 }

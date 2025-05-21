@@ -89,11 +89,6 @@ public class UserServlet extends HttpServlet {
                 return;
             }
 
-<<<<<<< Updated upstream
-            // Assuming userService.changePassword(userId, currentPassword, newPassword) exists
-            // and returns a boolean indicating success.
-=======
->>>>>>> Stashed changes
             boolean passwordChanged = userService.changePassword(user.getId(), currentPassword, newPassword);
 
             if (passwordChanged) {
@@ -102,40 +97,6 @@ public class UserServlet extends HttpServlet {
                 session.setAttribute("passwordChangeError", "Failed to change password. Please check your current password.");
             }
             response.sendRedirect(request.getContextPath() + "/views/myaccount.jsp");
-<<<<<<< Updated upstream
-=======
-        } else if ("updateProfile".equals(action)) {
-            HttpSession session = request.getSession(false);
-            if (session == null || session.getAttribute("user") == null) {
-                response.sendRedirect(request.getContextPath() + "/views/login.jsp?error=sessionExpired");
-                return;
-            }
-
-            User user = (User) session.getAttribute("user");
-            String newUsername = request.getParameter("newUsername");
-            String newEmail = request.getParameter("newEmail");
-            String currentPassword = request.getParameter("currentPassword");
-
-            // Verify current password before making changes
-            if (!userService.verifyPassword(user.getId(), currentPassword)) {
-                session.setAttribute("profileUpdateError", "Current password is incorrect.");
-                response.sendRedirect(request.getContextPath() + "/views/myaccount.jsp");
-                return;
-            }
-
-            // Update profile
-            boolean updated = userService.updateProfile(user.getId(), newUsername, newEmail);
-            if (updated) {
-                // Update session with new user data
-                user.setUsername(newUsername);
-                user.setEmail(newEmail);
-                session.setAttribute("user", user);
-                session.setAttribute("profileUpdateSuccess", "Profile updated successfully.");
-            } else {
-                session.setAttribute("profileUpdateError", "Failed to update profile. Username might already exist.");
-            }
-            response.sendRedirect(request.getContextPath() + "/views/myaccount.jsp");
->>>>>>> Stashed changes
         }
     }
 }
