@@ -16,8 +16,18 @@ public class UserService {
         users = new ArrayList<>();
         // Get the real path of the web application
         String realPath = context.getRealPath("/");
+<<<<<<< Updated upstream
         // Navigate to the correct target directory
         FILE_PATH = realPath + "data" + File.separator + "users.txt";
+=======
+        // Create data directory if it doesn't exist
+        File dataDir = new File(realPath + "data");
+        if (!dataDir.exists()) {
+            dataDir.mkdirs();
+        }
+        // Set the file path
+        FILE_PATH = dataDir.getAbsolutePath() + File.separator + "users.txt";
+>>>>>>> Stashed changes
         File file = new File(FILE_PATH);
         System.out.println("User data file absolute path: " + file.getAbsolutePath());
         loadUsers();
@@ -125,6 +135,7 @@ public class UserService {
     }
 
     private void saveUsers() {
+<<<<<<< Updated upstream
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
             for (User user : users) {
                 writer.println(user.getId() + "," + user.getUsername() + "," +
@@ -134,4 +145,143 @@ public class UserService {
             e.printStackTrace();
         }
     }
+=======
+        File file = new File(FILE_PATH);
+        try {
+            // Ensure the directory exists
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists()) {
+                if (!parentDir.mkdirs()) {
+                    throw new IOException("Failed to create directory: " + parentDir.getAbsolutePath());
+                }
+            }
+            
+            // Create a temporary file for atomic write
+            File tempFile = new File(FILE_PATH + ".tmp");
+            try (PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
+                for (User user : users) {
+                    String line = user.getId() + "," + user.getUsername() + "," +
+                            user.getPassword() + "," + user.getEmail() + "," + user.isAdmin();
+                    writer.println(line);
+                    System.out.println("Writing user: " + line);
+                }
+            }
+            
+            // If the original file exists, delete it
+            if (file.exists()) {
+                file.delete();
+            }
+            
+            // Rename the temporary file to the original file
+            if (!tempFile.renameTo(file)) {
+                throw new IOException("Failed to rename temporary file to " + FILE_PATH);
+            }
+            
+            System.out.println("Successfully saved " + users.size() + " users to: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Error saving users to file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public boolean verifyPassword(int userId, String password) {
+        for (User user : users) {
+            if (user.getId() == userId) {
+                return user.getPassword().equals(password);
+            }
+        }
+        return false;
+    }
+
+    public boolean updateProfile(int userId, String newUsername, String newEmail) {
+        System.out.println("Updating profile for user ID: " + userId);
+        System.out.println("New username: " + newUsername);
+        System.out.println("New email: " + newEmail);
+        
+        // Check if new username is already taken by another user
+        for (User user : users) {
+            if (user.getId() != userId && user.getUsername().equals(newUsername)) {
+                System.out.println("Username already taken by another user");
+                return false;
+            }
+        }
+
+        // Update the user's profile
+        for (User user : users) {
+            if (user.getId() == userId) {
+                System.out.println("Found user to update. Current data:");
+                System.out.println("Current username: " + user.getUsername());
+                System.out.println("Current email: " + user.getEmail());
+                
+                user.setUsername(newUsername);
+                user.setEmail(newEmail);
+                System.out.println("Updated user data:");
+                System.out.println("New username: " + user.getUsername());
+                System.out.println("New email: " + user.getEmail());
+                
+                saveUsers();
+                return true;
+            }
+        }
+        System.out.println("User not found with ID: " + userId);
+        return false;
+    }
+
+    public List<User> getAllUsers() {
+        // Return a copy of the current users list without reloading
+        return new ArrayList<>(users);
+    }
+
+    public boolean deleteUser(int userId) {
+        System.out.println("Attempting to delete user with ID: " + userId);
+        
+        // Don't allow deleting the admin user
+        for (User user : users) {
+            if (user.getId() == userId && user.isAdmin()) {
+                System.out.println("Cannot delete admin user");
+                return false;
+            }
+        }
+        
+        // Remove user and save changes
+        boolean removed = users.removeIf(user -> user.getId() == userId);
+        if (removed) {
+            System.out.println("User removed from memory, saving to file...");
+            // Write directly to file without reloading
+            File file = new File(FILE_PATH);
+            try {
+                // Create a temporary file for atomic write
+                File tempFile = new File(FILE_PATH + ".tmp");
+                try (PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
+                    for (User user : users) {
+                        String line = user.getId() + "," + user.getUsername() + "," +
+                                user.getPassword() + "," + user.getEmail() + "," + user.isAdmin();
+                        writer.println(line);
+                        System.out.println("Writing user: " + line);
+                    }
+                }
+                
+                // If the original file exists, delete it
+                if (file.exists()) {
+                    file.delete();
+                }
+                
+                // Rename the temporary file to the original file
+                if (!tempFile.renameTo(file)) {
+                    throw new IOException("Failed to rename temporary file to " + FILE_PATH);
+                }
+                
+                System.out.println("Successfully saved " + users.size() + " users to: " + file.getAbsolutePath());
+            } catch (IOException e) {
+                System.err.println("Error saving users to file: " + e.getMessage());
+                e.printStackTrace();
+                return false;
+            }
+            System.out.println("User deletion completed successfully");
+        } else {
+            System.out.println("User not found with ID: " + userId);
+        }
+        return removed;
+    }
+>>>>>>> Stashed changes
 }
