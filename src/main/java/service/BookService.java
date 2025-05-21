@@ -11,12 +11,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookService {
+    // Singleton instance
+    private static BookService instance;
+    private static final Object lock = new Object();
     // Using our custom LinkedList implementation for book storage
     private BookLinkedList books;
     private final String BOOKS_FILE;
     private final ServletContext context;
 
-    public BookService(ServletContext context) {
+    public static BookService getInstance(ServletContext context) {
+        if (instance == null) {
+            synchronized (lock) {
+                if (instance == null) {
+                    instance = new BookService(context);
+                }
+            }
+        }
+        return instance;
+    }
+
+    BookService(ServletContext context) {
         this.context = context;
         books = new BookLinkedList();
         // Get the real path of the deployed application
