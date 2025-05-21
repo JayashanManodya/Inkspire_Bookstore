@@ -16,10 +16,6 @@ public class UserService {
         users = new ArrayList<>();
         // Get the real path of the web application
         String realPath = context.getRealPath("/");
-<<<<<<< Updated upstream
-        // Navigate to the correct target directory
-        FILE_PATH = realPath + "data" + File.separator + "users.txt";
-=======
         // Create data directory if it doesn't exist
         File dataDir = new File(realPath + "data");
         if (!dataDir.exists()) {
@@ -27,7 +23,6 @@ public class UserService {
         }
         // Set the file path
         FILE_PATH = dataDir.getAbsolutePath() + File.separator + "users.txt";
->>>>>>> Stashed changes
         File file = new File(FILE_PATH);
         System.out.println("User data file absolute path: " + file.getAbsolutePath());
         loadUsers();
@@ -135,17 +130,6 @@ public class UserService {
     }
 
     private void saveUsers() {
-<<<<<<< Updated upstream
-        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
-            for (User user : users) {
-                writer.println(user.getId() + "," + user.getUsername() + "," +
-                        user.getPassword() + "," + user.getEmail() + "," + user.isAdmin());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-=======
         File file = new File(FILE_PATH);
         try {
             // Ensure the directory exists
@@ -283,5 +267,4 @@ public class UserService {
         }
         return removed;
     }
->>>>>>> Stashed changes
 }
