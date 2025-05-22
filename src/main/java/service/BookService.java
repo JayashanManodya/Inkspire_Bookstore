@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookService {
-    // Using our custom LinkedList implementation for book storage
+
     private BookLinkedList books;
     private final String BOOKS_FILE;
     private final ServletContext context;
@@ -19,15 +19,15 @@ public class BookService {
     public BookService(ServletContext context) {
         this.context = context;
         books = new BookLinkedList();
-        // Get the real path of the deployed application
+
         String realPath = context.getRealPath("/");
         BOOKS_FILE = realPath + "data" + File.separator + "books.txt";
-        System.out.println("Books file path: " + BOOKS_FILE); // Debug log
+        System.out.println("Books file path: " + BOOKS_FILE);
         loadBooks();
     }
     
     public List<Book> getAllBooks() {
-        // Reload books from file to ensure fresh data
+
         books = new BookLinkedList();
         loadBooks();
         
@@ -56,7 +56,6 @@ public class BookService {
                     } else if ("author".equals(searchType)) {
                         return book.getAuthor().toLowerCase().contains(searchQuery);
                     } else {
-                        // "all" or any other value - search in both title and author
                         return book.getTitle().toLowerCase().contains(searchQuery) || 
                                book.getAuthor().toLowerCase().contains(searchQuery);
                     }
@@ -104,7 +103,6 @@ public class BookService {
     private void loadBooks() {
         File file = new File(BOOKS_FILE);
         try {
-            // Ensure the directory exists
             File parentDir = file.getParentFile();
             if (!parentDir.exists()) {
                 if (!parentDir.mkdirs()) {
@@ -117,17 +115,17 @@ public class BookService {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         String[] parts = line.split("\\|");
-                        if (parts.length >= 9) {  // Updated to check for all required fields
+                        if (parts.length >= 9) {
                             Book book = new Book(
-                                Integer.parseInt(parts[0]),  // id
-                                parts[1],                    // title
-                                parts[2],                    // author
-                                Double.parseDouble(parts[3]), // price
-                                parts[4],                    // isbn
-                                parts[5],                    // description
-                                parts[6],                    // category
-                                parts[7],                    // photo
-                                Double.parseDouble(parts[8]) // rating
+                                Integer.parseInt(parts[0]),
+                                parts[1],
+                                parts[2],
+                                Double.parseDouble(parts[3]),
+                                parts[4],
+                                parts[5],
+                                parts[6],
+                                parts[7],
+                                Double.parseDouble(parts[8])
                             );
                             books.add(book);
                         }
@@ -143,22 +141,19 @@ public class BookService {
     private void saveBooks() {
         File file = new File(BOOKS_FILE);
         try {
-            // Ensure the directory exists
             File parentDir = file.getParentFile();
             if (!parentDir.exists()) {
                 if (!parentDir.mkdirs()) {
                     throw new IOException("Failed to create directory: " + parentDir.getAbsolutePath());
                 }
             }
-            
-            // Try to create the file if it doesn't exist
+
             if (!file.exists()) {
                 if (!file.createNewFile()) {
                     throw new IOException("Failed to create file: " + file.getAbsolutePath());
                 }
             }
-            
-            // Write to the file
+
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 for (Book book : books) {
                     writer.write(String.format("%d|%s|%s|%.2f|%s|%s|%s|%s|%.1f%n",

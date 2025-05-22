@@ -1,9 +1,6 @@
 package model;
 
-import java.io.Serializable;
-
-public class Book implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Book{
 
     private int id;
     private String title;
@@ -40,8 +37,8 @@ public class Book implements Serializable {
         this.rating = rating;
         this.photo = photo;
         this.stockQuantity = 0;
-        this.description = ""; // Default empty description
-        this.isbn = ""; // Default empty ISBN
+        this.description = "";
+        this.isbn = "";
     }
 
     public Book(int id, String title, String author, double price, double rating, String photo, int stockQuantity) {
@@ -52,11 +49,10 @@ public class Book implements Serializable {
         this.rating = rating;
         this.photo = photo;
         this.stockQuantity = stockQuantity;
-        this.description = ""; // Default empty description
-        this.isbn = ""; // Default empty ISBN
+        this.description = "";
+        this.isbn = "";
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -137,7 +133,6 @@ public class Book implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
-    //Overrides the default toString() method. This is useful for debugging — it gives a readable string representation of the Book object with all field values.
     @Override
     public String toString() {
         return "Book{" +
